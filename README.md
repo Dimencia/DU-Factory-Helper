@@ -5,7 +5,7 @@ Industry Printer - Main controller unit for a centralized printing interface
 
 Industry Slave - Slave unit for connecting to Industry to print on demand
 
-![Example](/FactoryHelperExample.png)
+![Example](/FactoryPrinterExample.png)
 
 ## To Use - Factory Helper
 Copy the contents of the FactoryHelper.json file above and right click your programming board -> Advanced -> Paste Lua Configuration from Clipboard
