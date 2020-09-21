@@ -15,9 +15,11 @@ You need a single screen connected to the programming board (and the core of cou
 ## To Use - Industry Printer
 There's some setup with these.  And overall I don't think the JSON pastes are great because they may result in problems with your component names, but here goes
 
-Before we start, let's go over some expectations.  This will not yet create intermediates - it assumes you have Maintain setup for anything like screws, etc.  It can't change a recipe on a machine.  It doesn't move ore or actually do anything except click the 'Start' button on the assemblers you connect (and sets the quantity) - you need to already have all the resources for it available.  It's meant to be used on large-scale factories that have dedicated assemblers for any given element.  
+Before we start, let's go over some expectations.  *This will not yet create intermediates* - it assumes you have Maintain setup for anything like screws, etc.  It can't change a recipe on a machine.  It doesn't move ore or actually do anything except click the 'Start' button on the assemblers you connect (and sets the quantity) - *you need to already have all the resources for it available*.  It's meant to be used on large-scale factories that have dedicated assemblers for any given element.  
 
-It is still in development and there might be some weird things.  Don't attempt to use this to craft anything with a batch size - it can accurately get the costs and does have info about batch sizes, but I haven't done anything with them for printing - you're not really expected to print anything with a batch size from this right now.  Will be added later.
+It is still in development and there might be some weird things.  Don't attempt to use this to craft anything with a batch size - it can accurately get the costs and does have info about batch sizes, but I haven't done anything with them for printing - you're not really expected to print anything with a batch size from this right now.  Will be added later.  
+
+### Requirements
 
 You will need one Prog board for the printer, one databank, and one prog board for each slave (each slave can control up to 9 industries).  The industries, of course, cannot have their recipes changed by LUA - you'll need one industry unit for each thing you want to be able to print.  You'll need a screen to control it all from
 
@@ -39,3 +41,21 @@ On the main board, edit the lua and go into system -> start().  At the top you'l
 ## Caveats
 
 This is still WIP and the buttons can be a little weird for very small lists of craftable items.  I had a really weird issue with the page down button, so if it's off by 20 pixels or so, let me know.  
+
+If you have multiple assemblies crafting the same item, you must put them all on the same programming board.
+
+## Features
+
+Allows connecting multiple assemblies with the same recipe; it will send the craft command to the first one that is available.  
+
+If no machines are available, it will leave the command in the queue and will start crafting as soon as a machine becomes available to craft it
+
+### Planned
+
+Ore enforcement - for use in an org, enforce that users insert the correct ores and amounts before it allows them to print
+
+Progress Tracking - track what is in the queue and who queued it
+
+Output enforcement - keep output behind a door that only opens when someone who has a queued item comes near it.  Monitor the output containers for the volume/mass removed.  Use a prox sensor to detect who is inside, and if more is removed than should have been.  Consider locking doors until they put back anything extra they took
+
+Warnings - warn the user if the machine is jammed or ingredients are missing, etc
