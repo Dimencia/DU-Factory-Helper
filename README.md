@@ -13,6 +13,10 @@ Copy the contents of the FactoryHelper.json file above and right click your prog
 You need a single screen connected to the programming board (and the core of course)
 
 ## To Use - Industry Printer
+
+# Note - This is purely for reference at this point.  The json pastes are not working versions right now, but I have uploaded individual readable files.  WorkingUpdate, WorkingStart, WorkingMousedown are all for the master board, WorkingSlave contains both Start and Tick for the slave board
+
+
 There's some setup with these.  And overall I don't think the JSON pastes are great because they may result in problems with your component names, but here goes
 
 Before we start, let's go over some expectations.  *This will not yet create intermediates* - it assumes you have Maintain setup for anything like screws, etc.  It can't change a recipe on a machine.  It doesn't move ore or actually do anything except click the 'Start' button on the assemblers you connect (and sets the quantity) - *you need to already have all the resources for it available*.  It's meant to be used on large-scale factories that have dedicated assemblers for any given element.  
