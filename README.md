@@ -1,64 +1,67 @@
 # DU-Factory-Helper
-Factory Helper - Calculates base ore costs for any printable element
 
-Industry Printer - Main controller unit for a centralized printing interface
+This allows you to order on-demand from up to 100 industry units on a single screen.  This will not allow you to change the recipes on industry - it will require a dedicated Assembler set to each recipe you want to be able to print.  
 
-Industry Slave - Slave unit for connecting to Industry to print on demand
+Each json file goes on a separate programming board.
+
+ProductionMaster - Handles screen control and display
+
+ProductionWorker - Handles connections to industry units and printing
+
+ProductionTimeScreen - Handles display and parsing of queue information
 
 ![Example](/FactoryPrinterExample.png)
 
-## To Use - Factory Helper
-Copy the contents of the FactoryHelper.json file above and right click your programming board -> Advanced -> Paste Lua Configuration from Clipboard
 
-You need a single screen connected to the programming board (and the core of course)
+## To Use
 
-## To Use - Industry Printer
-
-# Note - This is purely for reference at this point.  The json pastes are not working versions right now, but I have uploaded individual readable files.  WorkingUpdate, WorkingStart, WorkingMousedown are all for the master board, WorkingSlave contains both Start and Tick for the slave board
-
-
-There's some setup with these.  And overall I don't think the JSON pastes are great because they may result in problems with your component names, but here goes
+There's some setup with these.
 
 Before we start, let's go over some expectations.  *This will not yet create intermediates* - it assumes you have Maintain setup for anything like screws, etc.  It can't change a recipe on a machine.  It doesn't move ore or actually do anything except click the 'Start' button on the assemblers you connect (and sets the quantity) - *you need to already have all the resources for it available*.  It's meant to be used on large-scale factories that have dedicated assemblers for any given element.  
 
-It is still in development and there might be some weird things.  Don't attempt to use this to craft anything with a batch size - it can accurately get the costs and does have info about batch sizes, but I haven't done anything with them for printing - you're not really expected to print anything with a batch size from this right now.  Will be added later.  
+It can queue your items, but someone must activate a board in order to begin the next item in queue.  It is recommended to use a large detection zone so that all users of the factory can keep things queueing.  You may need to micromanage to avoid CPU overloads on larger factories - avoid having all PBs active at once, place detection zones carefully so that people who are crafting on the screen are not also running all of the WorkerBoards (they should just be running the WorkerBoards for the Master they're using, if using a Master, which is intensive)
+
+In our case we've got pressure plates and OR gates, and a detection zone that covers the entrance but not the pressure plates.  So users who are using the screens are only triggering the pressure plates, and users who aren't at the screens are triggering all of the WorkerBoards to keep queues working.
+
+It is still in development and there might be some weird things, but it seems good so far.
 
 ### Requirements
 
-You will need one Prog board for the printer, one databank, and one prog board for each slave (each slave can control up to 9 industries).  The industries, of course, cannot have their recipes changed by LUA - you'll need one industry unit for each thing you want to be able to print.  You'll need a screen to control it all from
+You will need one prog board for the Master, one prog board for the TimeScreen, one databank, and one prog board for each Worker (each Worker can control up to 10 industries).  The industries, of course, cannot have their recipes changed by LUA - you'll need one industry unit for each thing you want to be able to print.  You'll need a screen to control it all from, and one screen for the TimeScreen to display queue information.  You'll need proximity sensors.
 
-Connect the screen and databank (and core) to the primary Prog Board.  Make sure the names of the connections are correct, 'screen' and 'databank' where appropriate.
+Connect one screen to the Master board, and one to the TimeScreen board.  Connect the same databank to all boards.  You may use multiple Master boards to categorize, each with their own dedicated databank and Worker boards.  If you do this, connect each databank to the TimeScreen board.  
 
-Connect the databank to each of your slave boards.
+### Setup Worker Boards
 
-### Setup slave boards
+On each Worker Board, edit the lua and go into unit -> start().  At the top you'll see *Assemblies = ...* and a few example lines.  Edit these as appropriate.  For example, the default line of *recipe="Freight Space Engine L",machine=slot1* is a way to identify that the industry on slot1 craft Freight Space Engine L.  
 
-On each slave board, edit the lua and go into unit -> start().  At the top you'll see *Assemblies = ...* and a few example lines.  Edit these as appropriate.  For example, the default line of *recipe="Freight Space Engine L",machine=slot1* is a way to identify that the industry on slot1 craft Freight Space Engine L.  There is a database of all items in the main board's System Start, you can use this as a reference to make sure the names are correct (just Ctrl+F and search for the recipe you want in an external text editor)
+###There is a database of all items in the main board's System Start, you can use this as a reference to make sure the names are correct 
+(just Ctrl+F and search for the recipe you want in an external text editor)
 
-This is easiest to do if you connect one industry at a time, then go label what that industry does, otherwise you may mix up which industry is in which slot.  The slot names can be anything you want, just put the correct slot name to that machine in there (just like in the example, without quotes)
+If the names don't match exactly, you will get script errors
 
-### Setup main board
+This is easiest to do if you connect one industry at a time, then go label what that industry does, otherwise you may mix up which industry is in which slot.  The slot names can be anything you want, as long as they are correct in the table
+
+### Setup Main Board
 
 On the main board, edit the lua and go into system -> start().  At the top you'll see *CraftableItems = { "Square Carpet", "Freight Space Engine S" }*.  Edit this to be a list of all the items you've setup on your slave boards.
+
+You also have *Description = ...*.  This will be the title displayed on the screen
 
 
 ## Caveats
 
-This is still WIP and the buttons can be a little weird for very small lists of craftable items.  I had a really weird issue with the page down button, so if it's off by 20 pixels or so, let me know.  
-
-If you have multiple assemblies crafting the same item, you must put them all on the same programming board.
+If you have multiple assemblies crafting the same item, you must put them all on the same programming board.  Times should be calculated accordingly with multiple assemblies crafting.  Times do not include any talents.
 
 ## Features
 
-Allows connecting multiple assemblies with the same recipe; it will send the craft command to the first one that is available.  
+Allows connecting multiple assemblies with the same recipe.  It will load-balance if multiple machines are available and a multiple-quantity craft is started
 
 If no machines are available, it will leave the command in the queue and will start crafting as soon as a machine becomes available to craft it
 
 ### Planned
 
 Ore enforcement - for use in an org, enforce that users insert the correct ores and amounts before it allows them to print
-
-Progress Tracking - track what is in the queue and who queued it
 
 Output enforcement - keep output behind a door that only opens when someone who has a queued item comes near it.  Monitor the output containers for the volume/mass removed.  Use a prox sensor to detect who is inside, and if more is removed than should have been.  Consider locking doors until they put back anything extra they took
 
