@@ -1,3 +1,11 @@
+## We now have a [Discord](https://discord.gg/sRaqzmS)!  
+
+We have tons of code snippets, help channels, a github feed, and we focus on everything LUA and open source.  It's also a centralized place to get tech support: https://discord.gg/sRaqzmS
+
+We've also just added a lua-commissions channel!  Non-scripters can post requests here, and scripters can freelance those requests for pay (or not)
+
+We're also recruting for our in-game lua-focused org (with a bit of PVP focus on the side).  Check the discord for details
+
 # DU-Factory-Helper
 
 This allows you to order on-demand from up to 100 industry units on a single screen.  This will not allow you to change the recipes on industry - it will require a dedicated Assembler set to each recipe you want to be able to print.  
