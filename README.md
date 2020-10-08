@@ -41,7 +41,7 @@ Continue to setup the recipes
 
 On each Worker Board, edit the lua and go into unit -> start().  At the top you'll see *Assemblies = ...* and a few example lines.  Edit these as appropriate.  For example, the default line of *recipe="Laser Thermic Ammo XS",machine=slot3* is a way to identify that the industry on slot3 crafts Laser Thermic Ammo XS.  
 
-###There is a database of all items in the main board's System Start, you can use this as a reference to make sure the names are correct 
+### There is a database of all items in the main board's System Start, you can use this as a reference to make sure the names are correct 
 (just Ctrl+F and search for the recipe you want in an external text editor)
 
 If the names don't match exactly, you will get script errors
