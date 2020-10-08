@@ -31,6 +31,12 @@ You will need one prog board for the Master, one prog board for the TimeScreen, 
 
 Connect one screen to the Master board, and one to the TimeScreen board.  Connect the same databank to all boards.  You may use multiple Master boards to categorize, each with their own dedicated databank and Worker boards.  If you do this, connect each databank to the TimeScreen board.  
 
+### Install Scripts
+
+Copy the contents of each .json file above and paste them into a programming board each.  Link the boards - Core to Master/Worker, one screen each to Master/TimeScreen, databank to Master/TimeScreen/Worker, and industry units to Worker.  Slot names shouldn't matter.  
+
+Continue to setup the recipes
+
 ### Setup Worker Boards
 
 On each Worker Board, edit the lua and go into unit -> start().  At the top you'll see *Assemblies = ...* and a few example lines.  Edit these as appropriate.  For example, the default line of *recipe="Freight Space Engine L",machine=slot1* is a way to identify that the industry on slot1 craft Freight Space Engine L.  
