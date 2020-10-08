@@ -39,7 +39,7 @@ Continue to setup the recipes
 
 ### Setup Worker Boards
 
-On each Worker Board, edit the lua and go into unit -> start().  At the top you'll see *Assemblies = ...* and a few example lines.  Edit these as appropriate.  For example, the default line of *recipe="Freight Space Engine L",machine=slot1* is a way to identify that the industry on slot1 craft Freight Space Engine L.  
+On each Worker Board, edit the lua and go into unit -> start().  At the top you'll see *Assemblies = ...* and a few example lines.  Edit these as appropriate.  For example, the default line of *recipe="Laser Thermic Ammo XS",machine=slot3* is a way to identify that the industry on slot3 crafts Laser Thermic Ammo XS.  
 
 ###There is a database of all items in the main board's System Start, you can use this as a reference to make sure the names are correct 
 (just Ctrl+F and search for the recipe you want in an external text editor)
@@ -50,14 +50,14 @@ This is easiest to do if you connect one industry at a time, then go label what 
 
 ### Setup Main Board
 
-On the main board, edit the lua and go into system -> start().  At the top you'll see *CraftableItems = { "Square Carpet", "Freight Space Engine S" }*.  Edit this to be a list of all the items you've setup on your slave boards.
+On the main board, edit the lua and go into system -> start().  At the top you'll see *CraftableItems = { "Laser Thermic Ammo XS", "Laser Electromagnetic Ammo XS" }*.  Edit this to be a list of all the items you've setup on your WorkerBoards.
 
 You also have *Description = ...*.  This will be the title displayed on the screen
 
 
 ## Caveats
 
-If you have multiple assemblies crafting the same item, you must put them all on the same programming board.  Times should be calculated accordingly with multiple assemblies crafting.  Times do not include any talents.
+If you have multiple assemblies crafting the same item, you must put them all on the same WorkerBoard.  Times should be calculated accordingly with multiple assemblies crafting.  Times do not include any talents.
 
 ## Features
 
