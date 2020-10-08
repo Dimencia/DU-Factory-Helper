@@ -13,7 +13,7 @@ ProductionTimeScreen - Handles display and parsing of queue information
 ![Example](/FactoryPrinterExample.png)
 
 
-## To Use
+# To Use
 
 There's some setup with these.
 
@@ -25,19 +25,19 @@ In our case we've got pressure plates and OR gates, and a detection zone that co
 
 It is still in development and there might be some weird things, but it seems good so far.
 
-### Requirements
+## Requirements
 
 You will need one prog board for the Master, one prog board for the TimeScreen, one databank, and one prog board for each Worker (each Worker can control up to 10 industries).  The industries, of course, cannot have their recipes changed by LUA - you'll need one industry unit for each thing you want to be able to print.  You'll need a screen to control it all from, and one screen for the TimeScreen to display queue information.  You'll need proximity sensors.
 
 Connect one screen to the Master board, and one to the TimeScreen board.  Connect the same databank to all boards.  You may use multiple Master boards to categorize, each with their own dedicated databank and Worker boards.  If you do this, connect each databank to the TimeScreen board.  
 
-### Install Scripts
+## Install Scripts
 
 Copy the contents of each .json file above and paste them into a programming board each.  Link the boards - Core to Master/Worker, one screen each to Master/TimeScreen, databank to Master/TimeScreen/Worker, and industry units to Worker.  Slot names shouldn't matter.  
 
 Continue to setup the recipes
 
-### Setup Worker Boards
+## Setup Worker Boards
 
 On each Worker Board, edit the lua and go into unit -> start().  At the top you'll see *Assemblies = ...* and a few example lines.  Edit these as appropriate.  For example, the default line of *recipe="Laser Thermic Ammo XS",machine=slot3* is a way to identify that the industry on slot3 crafts Laser Thermic Ammo XS.  
 
@@ -48,7 +48,7 @@ If the names don't match exactly, you will get script errors
 
 This is easiest to do if you connect one industry at a time, then go label what that industry does, otherwise you may mix up which industry is in which slot.  The slot names can be anything you want, as long as they are correct in the table
 
-### Setup Main Board
+## Setup Main Board
 
 On the main board, edit the lua and go into system -> start().  At the top you'll see *CraftableItems = { "Laser Thermic Ammo XS", "Laser Electromagnetic Ammo XS" }*.  Edit this to be a list of all the items you've setup on your WorkerBoards.
 
