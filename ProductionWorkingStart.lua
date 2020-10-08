@@ -1,7 +1,16 @@
 CraftableItems = { "Smelter M", "Electronics Industry M", "Refiner M", "Glass Furnace M", "3D Printer M", "Chemical Industry M", "Assembly Line M", "Metalwork Industry M", "Container S" } -- etc, set these based on which items you have craftable in your slave units
 
-for k,v in pairs(core.getElementIdList()) do
-   system.print(core.getElementNameById(v)) 
+-- Find the elements
+for key, slot in pairs(unit) do
+	if type(slot) == "table" and type(slot.export) == "table" then
+		if slot.getElementIdList then
+			core = slot
+		elseif slot.setHTML then
+			screen = slot
+		elseif slot.getStringValue then
+			databank = slot
+		end
+	end
 end
 
 local t={"Ore","Pure","Catalyst","Fuel","Product","Intermediary Part","Complex Part","Exceptional Part","Functional Part","Structural Part","Core Unit","Container","Industry","Space Brake","Airbrake","Aileron","Stabilizer","Wing","Atmospheric Engine","Space Engine","Hover Engine","Adjustor","Rocket Engine","Vertical Booster","Interactive Element","Landing Gear","Force Field","Instrument","Control Unit","Anti-Gravity Generator","Door/Gate","Electronics","Light","Radar","Screen/Sign","Surrogate Element","Chair","Sensor","Decorative","Antenna","Barrier","Bathroom","Cable","Furniture","Hologram","Hull","Pipe","Plant","Window","Winglets","Scrap","Pure Honeycomb","Product Honeycomb","Resurrection Node","Virtual Projector","Cannon","Laser","Missile","Railgun","Cannon Ammo","Laser Ammo","Missile Ammo","Railgun Ammo","Warp Cell","Warp Drive Unit","Warp Beacon Unit","Combat Element"}
