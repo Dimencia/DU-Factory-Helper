@@ -59,11 +59,17 @@ You also have *Description = ...*.  This will be the title displayed on the scre
 
 If you have multiple assemblies crafting the same item, you must put them all on the same WorkerBoard.  Times should be calculated accordingly with multiple assemblies crafting.  Times do not include any talents.
 
+There is currently a race-condition that if someone queues an item to craft exactly when an item finishes crafting, it will not show up on the board (but will still craft)
+
 ## Features
 
 Allows connecting multiple assemblies with the same recipe.  It will load-balance if multiple machines are available and a multiple-quantity craft is started
 
 If no machines are available, it will leave the command in the queue and will start crafting as soon as a machine becomes available to craft it
+
+Shows time remaining to craft (in minutes until the screen flicker issue is fixed)
+
+Highlights your name on the queue board (whoever is running the programming board)
 
 ### Planned
 
@@ -71,4 +77,4 @@ Ore enforcement - for use in an org, enforce that users insert the correct ores 
 
 Output enforcement - keep output behind a door that only opens when someone who has a queued item comes near it.  Monitor the output containers for the volume/mass removed.  Use a prox sensor to detect who is inside, and if more is removed than should have been.  Consider locking doors until they put back anything extra they took
 
-Warnings - warn the user if the machine is jammed or ingredients are missing, etc
+Warnings/Statuses - warn the user if the machine is jammed or ingredients are missing, etc
